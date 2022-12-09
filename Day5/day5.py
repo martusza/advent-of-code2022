@@ -4,7 +4,7 @@ import re
 
 def read_file(file_name: str):
     data = []
-    with open(input_file_name) as f:
+    with open(file_name) as f:
         for line in f:
             data.append(line.rstrip())
     return data
