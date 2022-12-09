@@ -17,7 +17,6 @@ def find_marker_char(datastream: str,
             return i+n
 
 
-
 if __name__ == "__main__":
     input_file_name = sys.argv[1]
     data = read_file_to_string(input_file_name)
