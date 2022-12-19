@@ -5,8 +5,6 @@ instruction_cycles = {
     'addx': 2
 }
 
-signals = [20, 60, 100, 140, 180, 220]
-
 
 def read_file(file_name: str) -> list:
     data = []
@@ -16,24 +14,52 @@ def read_file(file_name: str) -> list:
     return data
 
 
-def calc_part1(input_data: list) -> int:
-    # Part 1 solution
-    X_part1 = []
+def calc_x(input_data: list) -> list:
+    X_vector = []
     current_x = 1
     for i in input_data:
         current_instruction = i[0]
         for j in range(instruction_cycles[current_instruction]):
-            X_part1.append(current_x)
+            X_vector.append(current_x)
         if current_instruction == "addx":
             current_x += int(i[1])
+    return X_vector
 
-    selected_signals = [X_part1[i-1]*i for i in signals]
-    return sum(selected_signals)
+
+def calc_part1(X_input: list) -> int:
+    # Part 1 solution
+    signals = [20, 60, 100, 140, 180, 220]
+
+    try:
+        selected_signals = [X_input[i-1]*i for i in signals]
+        return sum(selected_signals)
+    except IndexError:
+        print('Not enough observations')
 
 
 if __name__ == "__main__":
     input_file_name = sys.argv[1]
     instructions_data = read_file(input_file_name)
+    X = calc_x(instructions_data)
 
-    part1_solution = calc_part1(instructions_data)
+    # Part 1
+    part1_solution = calc_part1(X)
     print(f"Sum selected signals: {part1_solution}")
+
+    # Part 2
+    CRT = ""
+    CRT_position = 0
+    cycles = []
+    for x in X:
+        if x-1 <= CRT_position <= x+1:
+            CRT += "#"
+        else:
+            CRT += "."
+        CRT_position += 1
+        if CRT_position >= 40:
+            CRT_position = 0
+            cycles.append(CRT)
+            CRT=""
+
+    print("\n".join(cycles))
+
