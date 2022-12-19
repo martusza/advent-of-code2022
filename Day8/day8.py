@@ -90,7 +90,7 @@ if __name__ == "__main__":
     for k in horizontal_visibility:
         summary_score[k] = horizontal_visibility[k] * vertical_visibility[k]
 
-    print(max(summary_score.values()))
+    print(f"Highest scenic score {max(summary_score.values())}")
 
 
 
